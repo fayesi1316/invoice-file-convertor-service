@@ -1,0 +1,19 @@
+logging:
+  level: INFO
+  loggers:
+    com.example: DEBUG
+
+server:
+  applicationContextPath: /
+  applicationConnectors:
+    - type: http
+      port: 8888
+  adminConnectors:
+    - type: http
+      port: 8889
+
+template: Hello, %s!
+defaultName: Stranger
+customMap:
+  first: 1,200
+  second: 2,300
