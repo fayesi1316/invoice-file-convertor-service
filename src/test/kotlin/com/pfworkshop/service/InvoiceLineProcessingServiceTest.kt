@@ -1,11 +1,10 @@
 package com.pfworkshop.service
 
-import com.pfworkshop.core.InvoiceLine
+import com.pfworkshop.service.TestUtils.Companion.createInvoiceLine
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 
 import org.junit.Test
-import java.lang.reflect.Field
 
 class InvoiceLineProcessingServiceTest {
 
@@ -39,7 +38,6 @@ class InvoiceLineProcessingServiceTest {
         assertEquals("I123", result[0].invoiceNumber)
     }
 
-
     @Test
     fun `should return unique invoice line if multiple nonIHEA invoices sharing the same invoiceNumber`() {
         val line1 = createInvoiceLine("I123", "1-1234 - an Invoice", "some Acct", "2012-02-23", "3,000")
@@ -62,35 +60,5 @@ class InvoiceLineProcessingServiceTest {
         assertEquals("third Invoice", result[0].description)
         assertEquals("second Invoice", result[1].description)
         assertEquals("forth Invoice", result[2].description)
-    }
-
-    private fun createInvoiceLine(invoiceNumber: String,
-                                  description: String,
-                                  glAccountId: String,
-                                  paymentDate: String,
-                                  amount: String): InvoiceLine {
-        val invoiceLine = InvoiceLine()
-
-        var privateField: Field = InvoiceLine::class.java.getDeclaredField("invoiceNumber")
-        privateField.isAccessible = true
-        privateField.set(invoiceLine, invoiceNumber)
-
-        privateField = InvoiceLine::class.java.getDeclaredField("description")
-        privateField.isAccessible = true
-        privateField.set(invoiceLine, description)
-
-        privateField = InvoiceLine::class.java.getDeclaredField("glAccountId")
-        privateField.isAccessible = true
-        privateField.set(invoiceLine, glAccountId)
-
-        privateField = InvoiceLine::class.java.getDeclaredField("paymentDate")
-        privateField.isAccessible = true
-        privateField.set(invoiceLine, paymentDate)
-
-        privateField = InvoiceLine::class.java.getDeclaredField("amount")
-        privateField.isAccessible = true
-        privateField.set(invoiceLine, amount)
-
-        return invoiceLine
     }
 }
